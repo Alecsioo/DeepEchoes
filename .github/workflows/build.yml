@@ -1,9 +1,9 @@
-name: Build
+name: Pipeline
 
 on: [push, pull_request]
 
 jobs:
-  build:
+  setup:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -17,14 +17,32 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+          cache: gradle
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      # This is needed to be able to run ./gradlew below
-      # You can run `git update-index --chmod +x gradlew` then remove this step.
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build with Gradle
-        run: ./gradlew build
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run tests
+        run: ./gradlew clean test --stacktrace --info
+
+  build:
+    needs: [setup, test]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build mod
+        run: ./gradlew build -x test --stacktrace --info
+
+      - name: Upload mod jars
+        uses: actions/upload-artifact@v4
+        with:
+          name: DeepEchoes-build
+          path: |
+            build/libs/*.jar

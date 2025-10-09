@@ -64,7 +64,6 @@ neoForge {
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
-        /*
         data {
             data()
 
@@ -74,7 +73,6 @@ neoForge {
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
             programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
         }
-        */
 
         // applies to all the run configs above
         configureEach {
@@ -132,9 +130,20 @@ dependencies {
     // Example project dependency using a sister or child project:
     // implementation project(":myproject")
 
+    implementation(localGroovy())
+    testImplementation(platform('org.junit:junit-bom:6.0.0'))
+    testImplementation('org.junit.jupiter:junit-jupiter')
+    testRuntimeOnly('org.junit.platform:junit-platform-launcher')
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

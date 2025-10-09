@@ -1,13 +1,6 @@
 {
-  "itemGroup.deepechoes": "Example Mod Tab",
-  "block.deepechoes.example_block": "Example Block",
-  "item.deepechoes.example_item": "Example Item",
-
-  "deepechoes.configuration.title": "Deep Echoes Configs",
-  "deepechoes.configuration.section.deepechoes.common.toml": "Deep Echoes Configs",
-  "deepechoes.configuration.section.deepechoes.common.toml.title": "Deep Echoes Configs",
-  "deepechoes.configuration.items": "Item List",
-  "deepechoes.configuration.logDirtBlock": "Log Dirt Block",
-  "deepechoes.configuration.magicNumberIntroduction": "Magic Number Text",
-  "deepechoes.configuration.magicNumber": "Magic Number"
+  "item.deepechoes.corrupted_echonex_ingot": "Corrupted Echonex Ingot",
+  "item.deepechoes.echonex_ingot": "Echonex Ingot",
+  "item.deepechoes.raw_corrupted_echonex": "Raw Corrupted Echonex",
+  "item.deepechoes.raw_echonex": "Raw Echonex"
 }
