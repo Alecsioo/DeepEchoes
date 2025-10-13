@@ -1,23 +1,42 @@
 package com.github.alecsio.deepechoes.capabilities;
 
-import com.github.alecsio.deepechoes.DeepEchoes;
+import com.github.alecsio.deepechoes.items.EchoChargedItem;
+import com.github.alecsio.deepechoes.registries.DataComponentRegistry;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.common.util.INBTSerializable;
 
-public class EchoHandler implements IEchoHandler {
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Optional;
 
-    public static final int MAX_ECHO = (int) Math.pow(2, 16);
+@ParametersAreNonnullByDefault
+public class EchoHandler implements IEchoHandler, INBTSerializable<CompoundTag> {
 
-    private int echoAmount = 0;
+    private final ItemStack stack;
+    private int maxEcho;
+    private int storedEcho = 0;
+
+    public EchoHandler(ItemStack stack) {
+        Optional.ofNullable(stack.get(DataComponentRegistry.ECHO_CHARGE)).ifPresentOrElse(charge -> {
+            maxEcho = charge.maxEcho();
+            storedEcho = charge.storedEcho();
+        }, () -> maxEcho = (int) Math.pow(2, 16));
+
+        this.stack = stack;
+    }
 
     @Override
     public int insertEcho(int amount, boolean simulate) {
         if (amount <= 0) return 0;
 
-        int space = MAX_ECHO - echoAmount;
+        int space = maxEcho - storedEcho;
         int inserted = Math.min(space, amount);
         int remainder = amount - inserted;
 
         if (!simulate) {
-            echoAmount += inserted;
+            storedEcho += inserted;
+            updateStack();
         }
 
         return remainder;
@@ -27,10 +46,11 @@ public class EchoHandler implements IEchoHandler {
     public int extractEcho(int amount, boolean simulate) {
         if (amount <= 0) return 0;
 
-        int extracted = Math.min(echoAmount, amount);
+        int extracted = Math.min(storedEcho, amount);
 
         if (!simulate) {
-            echoAmount -= extracted;
+            storedEcho -= extracted;
+            updateStack();
         }
 
         return extracted;
@@ -38,6 +58,34 @@ public class EchoHandler implements IEchoHandler {
 
     @Override
     public int getStoredEcho() {
-        return echoAmount;
+        return storedEcho;
+    }
+
+    @Override
+    public int getMaxEcho() {
+        return maxEcho;
+    }
+
+    private void updateStack() {
+        EchoChargedItem.EchoCharge newEchoCharge = new EchoChargedItem.EchoCharge(storedEcho, maxEcho);
+        stack.set(DataComponentRegistry.ECHO_CHARGE.get(), newEchoCharge);
+    }
+
+    @Override
+    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
+        var tag = getCompoundTag();
+        tag.putInt("echoAmount", storedEcho);
+        tag.putInt("maxEcho", maxEcho);
+        return tag;
+    }
+
+    @Override
+    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
+        storedEcho = nbt.getInt("echoAmount");
+        maxEcho = nbt.getInt("maxEcho");
+    }
+
+    private CompoundTag getCompoundTag() {
+        return new CompoundTag();
     }
 }

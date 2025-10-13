@@ -1,6 +1,7 @@
 package com.github.alecsio.deepechoes.capabilities;
 
 import com.github.alecsio.deepechoes.DeepEchoes;
+import com.github.alecsio.deepechoes.registries.ItemRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -25,7 +26,7 @@ public class EchoCapabilities {
 
     @SubscribeEvent
     public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
-
+        event.registerItem(ECHO_HANDLER_ITEM, (stack, ctx) -> new EchoHandler(stack), ItemRegistry.ECHONEX_PICKAXE.get());
+        event.registerItem(ECHO_HANDLER_ITEM, (stack, ctx) -> new EchoHandler(stack), ItemRegistry.ECHONEX_SWORD.get());
     }
-
 }

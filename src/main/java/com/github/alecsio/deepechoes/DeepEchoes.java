@@ -1,10 +1,10 @@
 package com.github.alecsio.deepechoes;
 
+import com.github.alecsio.deepechoes.registries.BlockRegistry;
+import com.github.alecsio.deepechoes.registries.DataComponentRegistry;
 import com.github.alecsio.deepechoes.registries.ItemRegistry;
-import org.slf4j.Logger;
-
+import com.github.alecsio.deepechoes.registries.ProjectileRegistry;
 import com.mojang.logging.LogUtils;
-
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -19,9 +19,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
@@ -30,6 +30,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(DeepEchoes.MODID)
@@ -70,7 +71,10 @@ public class DeepEchoes {
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
+        BlockRegistry.BLOCKS.register(modEventBus);
         ItemRegistry.ITEMS.register(modEventBus);
+        ProjectileRegistry.ENTITY_TYPES.register(modEventBus);
+        DataComponentRegistry.DATA_COMPONENTS.register(modEventBus);
         ITEMS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);

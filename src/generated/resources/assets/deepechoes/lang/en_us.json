@@ -1,0 +1,10 @@
+{
+  "block.deepechoes.creative_echo_charger": "Creative Echonex Charger",
+  "item.deepechoes.corrupted_echonex_ingot": "Corrupted Echonex Ingot",
+  "item.deepechoes.echonex_ingot": "Echonex Ingot",
+  "item.deepechoes.echonex_pickaxe": "Echonex Pickaxe",
+  "item.deepechoes.echonex_sword": "Echonex Sword",
+  "item.deepechoes.raw_corrupted_echonex": "Raw Corrupted Echonex",
+  "item.deepechoes.raw_echonex": "Raw Echonex",
+  "tooltip.item.echohandler": "Stored Echo: %s / %s"
+}

@@ -1,6 +1,9 @@
 package com.github.alecsio.deepechoes;
 
+import com.github.alecsio.deepechoes.projectiles.client.SonicBoomProjectileRenderer;
+import com.github.alecsio.deepechoes.registries.ProjectileRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -27,5 +30,7 @@ public class DeepEchoesClient {
         // Some client setup code
         DeepEchoes.LOGGER.info("HELLO FROM CLIENT SETUP");
         DeepEchoes.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+
+        EntityRenderers.register(ProjectileRegistry.SONIC_BOOM.get(), SonicBoomProjectileRenderer::new);
     }
 }

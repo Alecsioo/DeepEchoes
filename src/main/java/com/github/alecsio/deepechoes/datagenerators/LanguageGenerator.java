@@ -1,6 +1,7 @@
 package com.github.alecsio.deepechoes.datagenerators;
 
 import com.github.alecsio.deepechoes.DeepEchoes;
+import com.github.alecsio.deepechoes.registries.BlockRegistry;
 import com.github.alecsio.deepechoes.registries.ItemRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -19,6 +20,8 @@ public class LanguageGenerator extends LanguageProvider {
     @Override
     protected void addTranslations() {
         addItemTranslations();
+        addBlockTranslations();
+        add("tooltip.item.echohandler", "Stored Echo: %s / %s");
     }
 
     private void addItemTranslations() {
@@ -26,6 +29,12 @@ public class LanguageGenerator extends LanguageProvider {
         addItem(ItemRegistry.ECHONEX_INGOT, "Echonex Ingot");
         addItem(ItemRegistry.RAW_CORRUPTED_ECHONEX, "Raw Corrupted Echonex");
         addItem(ItemRegistry.CORRUPTED_ECHONEX_INGOT, "Corrupted Echonex Ingot");
+        addItem(ItemRegistry.ECHONEX_SWORD, "Echonex Sword");
+        addItem(ItemRegistry.ECHONEX_PICKAXE, "Echonex Pickaxe");
+    }
+
+    private void addBlockTranslations() {
+        addBlock(BlockRegistry.CREATIVE_ECHO_CHARGER, "Creative Echonex Charger");
     }
 
     @SubscribeEvent

@@ -7,4 +7,6 @@ public interface IEchoHandler {
     int extractEcho(int amount, boolean simulate);
 
     int getStoredEcho();
+
+    int getMaxEcho();
 }

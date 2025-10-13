@@ -26,6 +26,9 @@ public class ItemModelGenerator extends ItemModelProvider {
         basicItem(ItemRegistry.RAW_CORRUPTED_ECHONEX);
         basicItem(ItemRegistry.ECHONEX_INGOT);
         basicItem(ItemRegistry.CORRUPTED_ECHONEX_INGOT);
+        basicItem(ItemRegistry.ECHONEX_SWORD);
+        basicItem(ItemRegistry.ECHONEX_PICKAXE);
+        // basicItem(ItemRegistry.CREATIVE_ECHO_CHARGER.get());
     }
 
     private void basicItem(Supplier<Item> itemSupplier) {
